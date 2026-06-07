@@ -1,0 +1,31 @@
+name: Entorno de Integracion Continua
+
+# ¿Cuándo se va a ejecutar esto? Cuando hagamos un 'push' a la rama 'main'
+on:
+  push:
+    branches: [ "main" ]
+
+# ¿Qué trabajos (jobs) va a realizar el servidor?
+jobs:
+  build-y-test:
+    # La computadora virtual que nos presta GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Copiar nuestro código del repositorio a la máquina virtual
+    - name: Obtener el código
+      uses: actions/checkout@v3
+
+    # 2. Instalar Node.js en la máquina virtual
+    - name: Configurar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    # 3. Instalar las dependencias (Express, Cucumber, etc.)
+    - name: Instalar dependencias
+      run: npm install
+
+    # 4. Ejecutar las pruebas automáticas
+    - name: Ejecutar pruebas SDD
+      run: npm test
