@@ -14,13 +14,13 @@ jobs:
     steps:
     # 1. Copiar nuestro código del repositorio a la máquina virtual
     - name: Obtener el código
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # 2. Instalar Node.js en la máquina virtual
     - name: Configurar Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
 
     # 3. Instalar las dependencias (Express, Cucumber, etc.)
     - name: Instalar dependencias
