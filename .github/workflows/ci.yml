@@ -33,3 +33,8 @@ jobs:
     # --- NUEVO PASO AGREGADO ---
     - name: Construir Imagen Docker (El Binario)
       run: docker build -t api-ci .
+
+    - name: Escaneo de SonarCloud
+      uses: SonarSource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
