@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('¡Hola! El entorno de Integración Continua funciona perfectamente.');
+  res.send('¡Hola! La API de nuestro eCommerce está en línea y testeada.');
 });
 
 app.listen(port, () => {
