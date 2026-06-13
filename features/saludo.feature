@@ -1,5 +1,5 @@
-Feature: Mensaje de inicio de la API
-  Scenario: El sistema devuelve el mensaje correcto
+Feature: Carga de la Vidriera de la Tienda
+  Scenario: El sistema muestra el título principal de la web
     Given que el servidor esta configurado
-    When solicito el saludo principal
-    Then la respuesta debe ser "¡Hola! La API de nuestro eCommerce está en línea y testeada.'"
+    When solicito la pagina principal
+    Then la respuesta debe contener "Bienvenido a GamerZone"
