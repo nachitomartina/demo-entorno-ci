@@ -39,3 +39,35 @@ jobs:
       uses: SonarSource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    # 7. Correo de Éxito
+    - name: Enviar correo de éxito
+      if: success() # Solo se ejecuta si todo lo anterior salió perfecto
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        subject: "✅ GamerZone: Despliegue Exitoso"
+        body: "¡Hola! Las pruebas automáticas del carrito y los descuentos pasaron perfectamente. La nueva versión de GamerZone se empaquetó con éxito."
+        to: ignacioamartina@gmail.com 
+        from: "GamerZone Bot"
+
+    # 8. Correo de Alerta
+    - name: Enviar correo de error
+      if: failure() # Se ejecuta a la fuerza aunque la tubería se haya cancelado
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        subject: "❌ GamerZone: Fallo en la tubería CI/CD"
+        body: |
+          ¡Alerta! El código nuevo rompió las pruebas de negocio y el despliegue fue cancelado.
+          
+          Para ver el motivo exacto del fallo, hacé clic en este enlace para abrir los registros del servidor:
+          ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        to: ignacioamartina@gmail.com 
+        from: "GamerZone Bot"
