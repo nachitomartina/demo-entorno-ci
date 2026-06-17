@@ -30,8 +30,8 @@ try {
     estadoCarrito = agregarProducto(2, "Resident Evil 4 (2005)", 15000);
     assert.strictEqual(estadoCarrito.length, 2, "Error: Ahora debería haber 2 registros de juegos distintos.");
 
-    console.log("✅ PRUEBAS EXITOSAS: El carrito agrega productos e incrementa cantidades correctamente.");
+    console.log("✅ PRUEBAS DE CARRITO EXITOSAS: El carrito agrega productos e incrementa cantidades correctamente.");
 } catch (error) {
-    console.error("❌ FALLO LA PRUEBA:", error.message);
+    console.error("❌ FALLO LA PRUEBA DE CARRITO:", error.message);
     process.exit(1); // Frena la ejecución si algo falla
 }

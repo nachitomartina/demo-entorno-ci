@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node prueba-carrito.js",
+    "test": "node prueba-carrito.js && node prueba-descuentos.js",
     "start": "node index.js"
   },
   "keywords": [],
