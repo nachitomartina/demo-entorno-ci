@@ -71,3 +71,8 @@ jobs:
           ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         to: ignacioamartina@gmail.com 
         from: "GamerZone Bot"
+
+    # 9. Gatillo de despliegue en Render
+    - name: Disparar actualización en Render
+      if: success() # Solo despliega si TODO lo anterior salió perfecto
+      run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"
