@@ -30,10 +30,11 @@ jobs:
     - name: Ejecutar pruebas SDD
       run: npm test
 
-    # --- NUEVO PASO AGREGADO ---
+    # 5. Construir la imagen de Docker
     - name: Construir Imagen Docker (El Binario)
       run: docker build -t api-ci .
 
+    # 6. Revisión de código con SonarCloud
     - name: Escaneo de SonarCloud
       uses: SonarSource/sonarqube-scan-action@master
       env:
