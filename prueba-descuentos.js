@@ -9,10 +9,10 @@ const porcentajeDescuento = 20; // 20% de descuento a toda la tienda
 
 // 2. Nuestro catálogo con los precios originales (sin descuento)
 const catalogo = [
-    { nombre: "Resident Evil 4 (2005)", precioBase: 15000 },
-    { nombre: "Minecraft", precioBase: 12000 },
-    { nombre: "FIFA 14", precioBase: 8500 },
-    { nombre: "Wii Sports Resort", precioBase: 10000 }
+    { nombre: "Resident Evil 4 (2005)", precioBase: 15000 },  // con descuento: 12000
+    { nombre: "Minecraft", precioBase: 12000 },   // con descuento: 9600
+    { nombre: "FIFA 14", precioBase: 8500 },      // con descuento: 6800
+    { nombre: "Wii Sports Resort", precioBase: 10000 }  // con descuento: 8000
 ];
 
 try {
