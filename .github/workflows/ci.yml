@@ -7,10 +7,12 @@ on:
 
 # ¿Qué trabajos (jobs) va a realizar el servidor?
 jobs:
-  build-y-test:
-    # La computadora virtual que nos presta GitHub
-    runs-on: ubuntu-latest
 
+  # =========================================================
+  # NODO 1: CONTROL DE CALIDAD Y AUDITORÍA
+  # =========================================================
+  control-de-calidad:
+    runs-on: ubuntu-latest
     steps:
     # 1. Copiar nuestro código del repositorio a la máquina virtual
     - name: Obtener el código
@@ -22,7 +24,7 @@ jobs:
       with:
         node-version: '22'
 
-    # 3. Instalar las dependencias (Express, Cucumber, etc.)
+    # 3. Instalar las dependencias
     - name: Instalar dependencias
       run: npm install
 
@@ -40,23 +42,9 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-    # 7. Correo de Éxito
-    - name: Enviar correo de éxito
-      if: success() # Solo se ejecuta si todo lo anterior salió perfecto
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: smtp.gmail.com
-        server_port: 465
-        username: ${{ secrets.MAIL_USERNAME }}
-        password: ${{ secrets.MAIL_PASSWORD }}
-        subject: "✅ GamerZone: Despliegue Exitoso"
-        body: "¡Hola! Las pruebas automáticas del carrito y los descuentos pasaron perfectamente. La nueva versión de GamerZone se empaquetó con éxito."
-        to: ignacioamartina@gmail.com 
-        from: "GamerZone Bot"
-
-    # 8. Correo de Alerta
+    # 7. Correo de Alerta (Se queda en el Nodo 1 para reaccionar rápido al fallo)
     - name: Enviar correo de error
-      if: failure() # Se ejecuta a la fuerza aunque la tubería se haya cancelado
+      if: failure() 
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
@@ -72,7 +60,28 @@ jobs:
         to: ignacioamartina@gmail.com 
         from: "GamerZone Bot"
 
-    # 9. Gatillo de despliegue en Render
+
+  # =========================================================
+  # NODO 2: DESPLIEGUE Y FEEDBACK POSITIVO
+  # =========================================================
+  despliegue-produccion:
+    runs-on: ubuntu-latest
+    needs: control-de-calidad # ESTA ES LA FLECHA QUE UNE LOS NODOS
+    
+    steps:
+    # 8. Gatillo de despliegue en Render
     - name: Disparar actualización en Render
-      if: success() # Solo despliega si TODO lo anterior salió perfecto
       run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+    # 9. Correo de Éxito
+    - name: Enviar correo de éxito
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        subject: "✅ GamerZone: Despliegue Exitoso"
+        body: "¡Hola! Las pruebas automáticas del carrito y los descuentos pasaron perfectamente. La nueva versión de GamerZone se empaquetó con éxito."
+        to: ignacioamartina@gmail.com 
+        from: "GamerZone Bot"
