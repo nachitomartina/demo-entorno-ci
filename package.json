@@ -13,8 +13,5 @@
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1"
-  },
-  "devDependencies": {
-    "@cucumber/cucumber": "^13.0.0"
   }
 }
